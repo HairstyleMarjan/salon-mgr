@@ -43,7 +43,7 @@ export default async function Dashboard() {
           {(appts || []).map((a: any) => (
             <li key={a.id} className="text-sm">
               <span className="text-slate-500">
-                {format(new Date(a.starts_at), 'HH:mm', { locale: nl })}
+                format(new Date(a.starts_at), 'dd/MM HH:mm')
               </span>{' '}
               — {a.customers?.first_name} {a.customers?.last_name} • {a.services?.name}
             </li>
