@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase-browser';
 
 type Service = { id:string; name:string; default_price:number };
 type Item = { service_id:string; description:string; qty:number; unit_price:number };
