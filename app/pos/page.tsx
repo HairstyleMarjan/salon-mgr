@@ -6,7 +6,7 @@ type Service = { id:string; name:string; default_price:number };
 type Item = { service_id:string; description:string; qty:number; unit_price:number };
 
 export default function POSPage() {
-  const s = createClient();
+  const supabase = createClient();
   const [services,setServices]=useState<Service[]>([]);
   const [items,setItems]=useState<Item[]>([]);
   const [payment,setPayment]=useState<'cash'|'card'|'other'>('card');
