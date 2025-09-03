@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase-browser';
 type Customer = { id:string; first_name:string; last_name:string; phone?:string|null; email?:string|null };
 
 export default function CustomersPage() {
-  const s = createClient();
+  const supabase = createClient();
   const [list,setList]=useState<Customer[]>([]);
   const [q,setQ]=useState('');
 
