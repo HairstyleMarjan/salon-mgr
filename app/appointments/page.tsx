@@ -29,7 +29,7 @@ export default async function AppointmentsPage() {
             </div>
 
             <div>
-              {format(new Date(a.starts_at), 'dd/MM HH:mm', { locale: nl })}
+             format(new Date(a.starts_at), 'dd/MM HH:mm')
             </div>
           </li>
         ))}
