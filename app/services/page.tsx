@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase-browser';
 type Service = { id:string; name:string; default_price:number; default_duration_min:number; active:boolean };
 
 export default function ServicesPage() {
-  const s = createClient();
+  const supabase = createClient();
   const [list, setList] = useState<Service[]>([]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState<number>(25);
