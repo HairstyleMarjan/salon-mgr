@@ -1,9 +1,9 @@
-import { createServer } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase-server';
 import { format } from 'date-fns';
 import nl from 'date-fns/locale/nl';
 
 export default async function AppointmentsPage() {
-  const supabase = createServer();
+  const supabase = createServerClient();
   const date = new Date();
   const startISO = new Date(date.getFullYear(), date.getMonth(), date.getDate()).toISOString();
 
