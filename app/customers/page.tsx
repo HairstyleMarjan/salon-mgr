@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase-browser';
 type Customer = { id:string; first_name:string; last_name:string; phone?:string|null; email?:string|null };
 
 export default function CustomersPage() {
