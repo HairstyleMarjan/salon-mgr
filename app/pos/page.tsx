@@ -12,7 +12,7 @@ export default function POSPage() {
   const [payment,setPayment]=useState<'cash'|'card'|'other'>('card');
 
   useEffect(()=>{ 
-    s.from('services').select('id,name,default_price').eq('active',true).then(({data})=>setServices(data||[])); 
+    supabase.from('services').select('id,name,default_price').eq('active',true).then(({data})=>setServices(data||[])); 
   },[]);
 
   const total = items.reduce((sum,i)=>sum+(i.qty*i.unit_price),0);
