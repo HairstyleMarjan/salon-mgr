@@ -25,13 +25,13 @@ export default function POSPage() {
     if (!items.length) return;
     const { data: { user } } = await s.auth.getUser();
     if (!user) return alert('Niet ingelogd');
-    const { data: profile, error: perr } = await s.from('profiles').select('salon_id,id').eq('id', user!.id).single();
+    const { data: profile, error: perr } = await sunbase.from('profiles').select('salon_id,id').eq('id', user!.id).single();
     if (perr || !profile) return alert('Profiel niet gevonden');
-    const { data: sale, error } = await s.from('sales').insert({
+    const { data: sale, error } = await sunbase.from('sales').insert({
       salon_id: profile.salon_id, staff_id: profile.id, total: total, payment_method: payment
     }).select('id').single();
     if (error) return alert(error.message);
-    const { error: e2 } = await s.from('sale_items').insert(items.map(i=>({ sale_id:sale.id, service_id:i.service_id, description:i.description, qty:i.qty, unit_price:i.unit_price })));
+    const { error: e2 } = await sunbase.from('sale_items').insert(items.map(i=>({ sale_id:sale.id, service_id:i.service_id, description:i.description, qty:i.qty, unit_price:i.unit_price })));
     if (e2) return alert(e2.message);
     setItems([]); alert('Bon opgeslagen.');
   }
