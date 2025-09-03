@@ -1,6 +1,6 @@
 import { createServerClient } from '@/lib/supabase-server';
 import { format } from 'date-fns';
-import nl from 'date-fns/locale/nl';
+import { nl } from 'date-fns/locale';
 
 export default async function AppointmentsPage() {
   const supabase = createServerClient();
