@@ -1,79 +1,35 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase-browser';
+import { createClient } from '@lib/supabase-browser';
 
-type Customer = {
-  id: string;
-  first_name: string;
-  last_name: string;
-  phone?: string | null;
-  email?: string | null;
-};
+const s = createClient();
 
-export default function CustomersPage() {
-  const s = createClient();
+type Service = { id: string; name: string; default_price?: number | null };
 
-  const [list, setList] = useState<Customer[]>([]);
-  const [q, setQ] = useState('');
+export default function ServicesPage() {
+  const [list, setList] = useState<Service[]>([]);
 
   async function load() {
-    // basisquery
-    let query = s
-      .from('customers')
-      .select('id,first_name,last_name,phone,email')
-      .order('last_name');
-
-    // optionele zoekfilter op achternaam
-    if (q) query = query.ilike('last_name', `%${q}%`);
-
-    const { data, error } = await query;
-    if (error) {
-      console.error(error);
-      setList([]);
-      return;
-    }
-    setList(data ?? []);
+    const { data } = await s.from('services').select('*').order('name');
+    setList(data || []);
   }
 
-  // laad bij eerste keer en telkens als q verandert
   useEffect(() => {
     load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [q]);
+  }, []);
 
   return (
-    <div className="space-y-3">
-      <h1 className="text-2xl font-semibold">Klanten</h1>
-
-      <div className="flex gap-2">
-        <input
-          className="input max-w-xs"
-          placeholder="Zoek op achternaam..."
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-        <a href="/customers/new" className="btn">
-          Nieuwe klant
-        </a>
-      </div>
-
+    <div className="space-y-4">
+      <h1 className="text-2xl font-semibold">Diensten</h1>
       <ul className="divide-y">
-        {list.map((c) => (
-          <li key={c.id} className="py-2 flex justify-between">
-            <div>
-              <a href={`/customers/${c.id}`} className="font-medium">
-                {c.last_name}, {c.first_name}
-              </a>
-              <span className="ml-2 text-sm text-slate-500">
-                {c.phone || ''} {c.email ? `• ${c.email}` : ''}
-              </span>
-            </div>
+        {list.map((sv) => (
+          <li key={sv.id} className="py-2 flex justify-between">
+            <span>{sv.name}</span>
+            <span>{sv.default_price != null ? `€ ${Number(sv.default_price).toFixed(2)}` : ''}</span>
           </li>
         ))}
-        {list.length === 0 && (
-          <li className="py-2 text-sm text-slate-500">Geen klanten gevonden.</li>
-        )}
+        {list.length === 0 && <li className="py-2 text-sm text-slate-500">Nog geen diensten.</li>}
       </ul>
     </div>
   );
