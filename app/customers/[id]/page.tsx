@@ -1,7 +1,7 @@
-import { createServer } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase-server';
 
 export default async function CustomerDetail({ params }: { params: { id: string } }) {
-  const supabase = createServer();
+  const supabase = createServerClient();
   const { data: cust } = await supabase.from('customers')
     .select('id, first_name, last_name, phone, email, notes, created_at')
     .eq('id', params.id).single();
